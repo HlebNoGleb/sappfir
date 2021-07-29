@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    home
   </div>
+  <UserForm :UserData="UserData"></UserForm> <!-- отправляю UserData в UserFrom -->
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import UserForm from '@/components/UserForm.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    UserForm,
+  },
+  data() {
+    return {
+      UserData: { name: true, phone: true }, // создаю (получаю объект с UserData)
+    };
   },
 };
 </script>
