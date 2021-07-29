@@ -10,7 +10,7 @@
     v-if="UserData.phone.isUse"
     :placeholder="[[ UserData.phone.placeholder ]]">
     <!-- условие на проверку наличия phone в UserData -->
-    <button class="btn">start</button>
+    <button class="btn">{{TextData.buttonStartText}}</button>
   </form>
 </template>
 
@@ -37,6 +37,22 @@ export default {
             value: '',
             placeholder: 'Введите ваш Телефон',
           },
+        };
+      },
+    },
+    TextData: {
+      type: Object,
+      // required: true, параметр обязателен для передачи
+      default: function TextDataDefault() {
+        return {
+          popupData: {
+            successTitle: 'successTitle',
+            successText: 'successText',
+            confirmButtonText: 'confirmButtonText',
+            errorTitle: 'errorTitle',
+            errorText: 'errorText',
+          },
+          buttonStartText: 'Начать',
         };
       },
     },
@@ -67,18 +83,22 @@ export default {
       if (this.errors.length === 0) {
         this.$swal({
           icon: 'success',
-          title: `Thanks ${this.form.name}`,
-          text: 'u cool',
+          title: `${this.form.name} ${this.TextData.popupData.successTitle}`,
+          text: this.TextData.popupData.successText,
+          confirmButtonText: this.TextData.popupData.confirmButtonText,
+        }).then(() => {
+          this.getUserName(this.form.name);
+          this.form.name = '';
+          this.form.phone = '';
         });
-        this.form.name = '';
-        this.form.phone = '';
       } else {
         const errorsHtml = this.createErrorsHtml(this.errors);
         console.log(errorsHtml);
         this.$swal({
           icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+          title: this.TextData.popupData.errorTitle,
+          text: this.TextData.popupData.errorText,
+          confirmButtonText: this.TextData.popupData.confirmButtonText,
           html: errorsHtml,
         });
       }
@@ -95,6 +115,9 @@ export default {
       console.log(errorsHtml);
 
       return errorsHtml;
+    },
+    getUserName(name) {
+      this.$emit('getUserName', name);
     },
   },
 };

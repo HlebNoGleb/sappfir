@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    home
-  </div>
-  <UserForm :UserData="UserData"></UserForm> <!-- отправляю UserData в UserFrom -->
+  <UserForm v-if="!userName"
+  :UserData="UserData"
+  :TextData="TextData"
+  @getUserName="getUserName">
+  </UserForm> <!-- отправляю UserData в UserFrom -->
+  <QuestionsList v-else
+    :userName="userName"
+  ></QuestionsList>
 </template>
 
 <script>
 // @ is an alias to /src
 import UserForm from '@/components/UserForm.vue';
+import QuestionsList from '@/components/QuestionsList.vue';
 
 export default {
   name: 'Home',
   components: {
-    UserForm,
+    UserForm, QuestionsList,
   },
   data() {
     return {
@@ -29,8 +34,24 @@ export default {
           placeholder: 'Введите ваш Телефон',
           errorText: 'Вы не ввели телефон',
         },
+      },
+      TextData: {
+        popupData: {
+          successTitle: 'successTitle',
+          successText: 'successText',
+          confirmButtonText: 'confirmButtonText',
+          errorTitle: 'errorTitle',
+          errorText: 'errorText',
+        },
+        buttonStartText: 'Начать',
       }, // создаю (получаю объект с UserData)
+      userName: '',
     };
+  },
+  methods: {
+    getUserName(name) {
+      this.userName = name;
+    },
   },
 };
 </script>
