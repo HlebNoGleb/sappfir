@@ -16,7 +16,20 @@ export default {
   },
   data() {
     return {
-      UserData: { name: true, phone: true }, // создаю (получаю объект с UserData)
+      UserData: {
+        name: {
+          isUse: true,
+          value: '',
+          placeholder: 'Введите ваше ФИО',
+          errorText: 'Вы не ввели ФИО',
+        },
+        phone: {
+          isUse: true,
+          value: '',
+          placeholder: 'Введите ваш Телефон',
+          errorText: 'Вы не ввели телефон',
+        },
+      }, // создаю (получаю объект с UserData)
     };
   },
 };
