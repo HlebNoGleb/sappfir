@@ -10,7 +10,7 @@
     v-if="UserData.phone.isUse"
     :placeholder="[[ UserData.phone.placeholder ]]">
     <!-- условие на проверку наличия phone в UserData -->
-    <button class="btn">{{TextData.buttonStartText}}</button>
+    <button class="btn">{{TextData.buttonData.start}}</button>
   </form>
 </template>
 
@@ -52,7 +52,23 @@ export default {
             errorTitle: 'errorTitle',
             errorText: 'errorText',
           },
-          buttonStartText: 'Начать',
+          buttonData: {
+            start: 'Начать',
+            checkButtonData: {
+              yes: {
+                id: 1,
+                value: 'Да',
+              },
+              no: {
+                id: 2,
+                value: 'Нет',
+              },
+              maybe: {
+                id: 3,
+                value: 'Возможно',
+              },
+            },
+          },
         };
       },
     },
