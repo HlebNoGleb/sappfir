@@ -1,7 +1,7 @@
 <template>
   <div class="questionList">
-    <p>имя:  {{userName}}</p>
-    <div style="position: fixed; bottom: 20px; right: 20px; color: red;">{{selectedArray}}</div>
+    <div style="position: fixed; bottom: 40px; right: 20px; color: red;">{{selectedArray}}</div>
+    <div style="position: fixed; bottom: 20px; right: 20px; color: red;">{{resultArray}}</div>
     <QuestionItem
     v-for="question in questions"
     :key="question.id"
@@ -20,10 +20,6 @@ export default {
     QuestionItem,
   },
   props: {
-    userName: {
-      type: String,
-      required: true,
-    },
     questions: {
       type: Array,
       required: true,
@@ -63,11 +59,45 @@ export default {
   data() {
     return {
       selectedArray: [],
+      resultArray: [],
     };
   },
   methods: {
     CreateSelectedRadioArray(radioId, questionId) {
       this.selectedArray[questionId] = radioId;
+      if (this.selectedArray.length === this.questions.length) {
+        if (!this.selectedArray.includes(undefined)) {
+          this.resultArray = this.CreateResultArray();
+          this.$emit('clicked', this.resultArray);
+        }
+      }
+    },
+    CreateResultArray() {
+      const step = 8;
+      const resultArray = [];
+      const firstArray = [];
+      const secondArray = [];
+
+      let sum = 0;
+      let sum1 = 0;
+
+      for (let i = 0; i < step; i += 1) {
+        for (let j = i; j < this.selectedArray.length; j += step) {
+          if (j < 24) {
+            sum += this.selectedArray[j];
+          } else {
+            sum1 += this.selectedArray[j];
+          }
+        }
+        firstArray.push(sum);
+        secondArray.push(sum1);
+        sum = 0;
+        sum1 = 0;
+      }
+      resultArray.push(firstArray);
+      resultArray.push(secondArray);
+
+      return resultArray;
     },
   },
 };

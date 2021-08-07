@@ -9,8 +9,8 @@
       <p v-for="(button) in TextData.buttonData.checkButtonData" :key="button">
         <label>
           <input class="with-gap" name="group1" type="radio"
-          @change="$emit('selectedRadio', button.id, question.id)"
-          :checked="$emit('selectedRadio', button.id, question.id)" />
+          @change="$emit('selectedRadio', button.id, question.id)" />
+          <!-- :checked="$emit('selectedRadio', button.id, question.id)" -->
           <span>{{button.value}} - {{button.id}}</span>
         </label>
       </p>
@@ -22,6 +22,11 @@
 export default {
   props: ['question', 'TextData'],
   emits: ['selectedRadio'],
+  data() {
+    return {
+      isSelect: false,
+    };
+  },
 };
 </script>
 
